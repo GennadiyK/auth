@@ -1,7 +1,18 @@
-let _ = require('lodash');
+const mongoose = require('./mongoose');
 
-let User = function (prop) {
-  _.assign(this, prop);
-};
+let userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    lowercase: true
+  },
+  password: {
+    type: String,
+    unique: true,
+    required: true,
+    trin: true
+  }
+},{
+  timestamps: true
+});
 
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);
