@@ -9,7 +9,7 @@ let userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    trin: true
+    trim: true
   }
 },{
   timestamps: true
