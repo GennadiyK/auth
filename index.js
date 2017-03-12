@@ -3,16 +3,17 @@ const app = new Koa();
 const bodyParser = require('koa-body-parser');
 const router = require('koa-router')();
 const User = require('./models/user');
-const passwordHash = require('password-hash');
-
-
-
+const crypto = require('crypto');
+const hash = crypto.createHash('sha512');
 
 router.post('/registr', async (ctx) => {
   try {
+      let salt = 'salt1';
+      let password = ctx.request.body.password + salt;
       await User.create({
         email: ctx.request.body.email,
-        password:  passwordHash.generate(ctx.request.body.password)
+        password:  hash.update(password).digest("hex"),
+        salt: salt
       });
       ctx.body = 'Registered successfully';
     
